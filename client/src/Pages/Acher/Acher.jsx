@@ -1,30 +1,22 @@
-import React from 'react';
-import Banner from '../../components/Acher/Banner';
+import GiveawayHero from '../../components/Acher/GiveawayHero';
 import Influencer from '../../components/Acher/Influencer';
 import Giveaway from '../../components/Acher/Giveaway';
-import Product from '../../components/Acher/Product';
-import Sidler from '../../components/Acher/Sidler';
-import AboutAcher from '../../components/Acher/AboutAcher';
-import ClientReview from '../../components/Acher/ClientReview';
-import CheckOut from '../../components/Acher/CheckOut';
-import FinalCta from '../../components/Acher/FinalCta';
+import AllProducts from '../../components/Acher/AllProducts';
+import Reviews from '../../components/common/Reviews';
+import OrderPanel from '../../components/common/OrderPanel';
+import Faq from '../../components/common/Faq';
+import { combos } from '../../data/products';
 
-const Acher = () => {
-  return (
-    <div>
-      {' '}
-      <Banner></Banner>
-      <Influencer></Influencer>
-      <Giveaway></Giveaway>
-      {/* <AboutRajshahi></AboutRajshahi> */}
-      <Product></Product>
-      <Sidler></Sidler>
-      <AboutAcher></AboutAcher>
-      <ClientReview></ClientReview>
-      <CheckOut></CheckOut>
-      <FinalCta></FinalCta>
-    </div>
-  );
-};
+const Acher = () => (
+  <>
+    <GiveawayHero />
+    <Influencer />
+    <Giveaway />
+    <AllProducts />
+    <Reviews />
+    <OrderPanel itemId={combos[0].id} showPicker />
+    <Faq />
+  </>
+);
 
 export default Acher;

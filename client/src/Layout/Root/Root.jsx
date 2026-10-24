@@ -1,25 +1,23 @@
-import React from 'react';
-import { Outlet } from 'react-router';
-import BG from '../../assets/BG IMG.webp';
+import { useEffect } from 'react';
+import { Outlet, useLocation } from 'react-router';
+import Header from '../../components/common/Header';
+import Footer from '../../components/common/Footer';
 
 const Root = () => {
-  return (
-    <div
-      className="min-h-screen bg-top relative "
-      style={{
-        backgroundImage: `url(${BG})`,
-        backgroundRepeat: 'repeat',
-        // backgroundSize: 'cover',
-        backgroundPosition: 'top center',
-      }}
-    >
-      {/* 👇 overlay layer */}
-      <div className="absolute inset-0 bg-white/50"></div>
+  const { pathname } = useLocation();
 
-      {/* content layer 👇 */}
-      <div className="relative z-10">
+  // পেজ বদলালে একদম উপরে নিয়ে যাবে
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-paper">
+      <Header />
+      <main className="flex-1">
         <Outlet />
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 };

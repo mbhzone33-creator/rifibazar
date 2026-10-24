@@ -1,112 +1,182 @@
-import { landingPages } from '../../data/landingPageConfig';
-import ProductCard from '../../components/am/ProductCard';
+import { Link } from 'react-router';
+import { Phone, Truck, Banknote, BadgePercent, Gift } from 'lucide-react';
 import {
-  Package,
-  Sparkles,
-  TrendingUp,
-  Apple,
-  Leaf,
-  Truck,
-} from 'lucide-react';
+  products,
+  combos,
+  PRICE_PER_KG,
+  DELIVERY_CHARGE,
+  PHONE_TEL,
+  taka,
+  bn,
+} from '../../data/products';
+import ProductCard from '../../components/common/ProductCard';
+import ComboCard from '../../components/common/ComboCard';
+import Reviews from '../../components/common/Reviews';
+import Faq from '../../components/common/Faq';
+import heroImg from '../../assets/gur/lali.webp';
+import pithaAd from '../../assets/gur/pitha-ad.webp';
 
 export default function Home() {
   return (
     <>
-      {/* Hero / Title Section for Home */}
-      <div className="bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 py-12 md:py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white rounded-full shadow-sm mb-4">
-            <span className="text-amber-600 text-sm">🥭</span>
-            <span className="text-xs font-semibold text-amber-700 tracking-wide">
-              রাজশাহী আমের রাজধানী
-            </span>
+      {/* ───── হিরো ───── */}
+      <section className="bg-rosh overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 pt-8 md:pt-14 grid md:grid-cols-2 gap-2 md:gap-10 items-center">
+          <div className="pour-in">
+            <p className="inline-block text-sm font-semibold bg-leaf text-white px-3 py-1.5 rounded-full">
+              ৫ রকমের খেজুর গুড়
+            </p>
+            <h1 className="font-display text-[2.6rem] sm:text-5xl lg:text-6xl leading-[1.12] mt-4">
+              খেজুরের খাঁটি গুড়,
+              <br />
+              সরাসরি আপনার ঘরে
+            </h1>
+            <p className="mt-4 text-lg text-ink/75 max-w-md leading-relaxed">
+              পাতালি, লালী, দানাদার আর চকলেট গুড়। কেজি মাত্র {taka(PRICE_PER_KG)}, ডেলিভারি সারাদেশে {taka(DELIVERY_CHARGE)}।
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href="#products"
+                className="bg-brand text-ink font-bold px-6 py-3.5 rounded-full"
+              >
+                গুড় দেখুন
+              </a>
+              <a
+                href="#combos"
+                className="border-2 border-ink font-bold px-6 py-3 rounded-full hover:bg-ink hover:text-rosh transition-colors"
+              >
+                কম্বো অফার
+              </a>
+            </div>
           </div>
 
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
-            রাজশাহী ও নওগাঁ <span className="text-amber-600">সেরা আম</span>{' '}
-            সরাসরি বাগান থেকে
-          </h1>
+          <div className="relative flex justify-center md:justify-end">
+            <img
+              src={heroImg}
+              alt="মাটির বাটিতে চামচ থেকে ঝরে পড়ছে ঘন লালী গুড়"
+              fetchPriority="high"
+              className="pour-in w-[78%] max-w-[420px] md:max-w-[480px] md:w-full drop-shadow-[0_24px_30px_rgba(92,42,15,0.28)]"
+              style={{ animationDelay: '0.15s' }}
+            />
+          </div>
+        </div>
+      </section>
 
-          <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-            বাছাইকৃত বাগান থেকে উৎপাদিত রসালো, মিষ্টি ও সুগন্ধিযুক্ত আম। সরাসরি
-            গাছ থেকে তোলা, কোনো কেমিক্যাল ছাড়াই। সারা দেশে ডেলিভারি দেওয়া হয়।
+      {/* ───── তিনটি কথা ───── */}
+      <section className="bg-ink text-rosh">
+        <ul className="max-w-6xl mx-auto px-4 py-4 grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
+          <li className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
+            <BadgePercent className="w-5 h-5 text-brand" aria-hidden="true" />
+            <span>সব গুড় {taka(PRICE_PER_KG)}/কেজি</span>
+          </li>
+          <li className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
+            <Truck className="w-5 h-5 text-brand" aria-hidden="true" />
+            <span>সারাদেশে ডেলিভারি {taka(DELIVERY_CHARGE)}</span>
+          </li>
+          <li className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
+            <Banknote className="w-5 h-5 text-brand" aria-hidden="true" />
+            <span>ক্যাশ অন ডেলিভারি</span>
+          </li>
+        </ul>
+      </section>
+
+      {/* ───── সব গুড় ───── */}
+      <section id="products" className="scroll-mt-16 py-12 md:py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="font-display text-3xl md:text-4xl">আপনার পছন্দের গুড় বেছে নিন</h2>
+          <p className="text-ink/70 mt-2">
+            প্রতিটির স্বাদ, রঙ আর ব্যবহার আলাদা। ছবিতে ট্যাপ করে বিস্তারিত দেখুন।
           </p>
 
-          <div className="w-20 h-0.5 bg-gradient-to-r from-amber-400 to-orange-400 mx-auto mt-6 rounded-full"></div>
-        </div>
-      </div>
-
-      {/* Products Grid Section */}
-      <div className="py-8 md:py-12 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          {/* Section Title */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 rounded-full mb-3">
-              <Package className="w-4 h-4 text-amber-600" />
-              <span className="text-xs font-semibold text-amber-700 tracking-wide">
-                আমের সেরা কালেকশন
-              </span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-              আমাদের<span className="text-amber-600"> জনপ্রিয় আম </span>
-              সমূহ
-            </h2>
-            <p className="text-gray-500 text-sm mt-2">
-              বেছে নিন আপনার পছন্দের মানসম্পন্ন আম
-            </p>
-            <div className="w-12 h-0.5 bg-amber-400 mx-auto mt-3 rounded-full"></div>
-          </div>
-
-          {/* Product Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {landingPages.map(item => (
-              <ProductCard key={item.id} data={item.card} id={item.id} />
+          <div className="mt-7 flex flex-wrap justify-center gap-3 md:gap-4">
+            {products.map(p => (
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Features Section */}
-      <div className="py-8 px-4 bg-gradient-to-r from-amber-50 to-yellow-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
-                <span className="text-amber-600 text-sm">🥭</span>
-              </div>
-              <p className="font-semibold text-gray-800 text-sm">
-                বাগান থেকে তাজা
-              </p>
-              <p className="text-xs text-gray-500">সরাসরি সংগ্রহ</p>
-            </div>
-            <div className="text-center p-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
-                <Leaf className="w-6 h-6 text-green-600" />
-              </div>
-              <p className="font-semibold text-gray-800 text-sm">
-                কেমিক্যাল ফ্রি
-              </p>
-              <p className="text-xs text-gray-500">প্রাকৃতিক উপায়ে</p>
-            </div>
-            <div className="text-center p-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
-                <TrendingUp className="w-6 h-6 text-blue-600" />
-              </div>
-              <p className="font-semibold text-gray-800 text-sm">সেরা মানের</p>
-              <p className="text-xs text-gray-500">গ্রেড-১ আম</p>
-            </div>
-            <div className="text-center p-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
-                <Truck className="w-6 h-6 text-orange-600" />
-              </div>
-              <p className="font-semibold text-gray-800 text-sm">
-                দ্রুত ডেলিভারি
-              </p>
-              <p className="text-xs text-gray-500">সারা দেশে</p>
-            </div>
+      {/* ───── কম্বো ───── */}
+      <section id="combos" className="scroll-mt-16 bg-molasses text-rosh py-12 md:py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="font-display text-3xl md:text-4xl">কম্বো নিলে সুবিধা বেশি</h2>
+          <p className="text-rosh/75 mt-2 max-w-xl">
+            একসাথে কয়েক রকম গুড় নিন, কম্বো অর্ডারে{' '}
+            <Link to="/acher" className="underline decoration-brand underline-offset-4 font-semibold text-rosh">
+              রাজশাহী ট্যুর গিভঅ্যাওয়ের
+            </Link>{' '}
+            এন্ট্রিও পাচ্ছেন।
+          </p>
+
+          <div className="mt-7 grid gap-4 md:grid-cols-3">
+            {combos.map(c => (
+              <ComboCard key={c.id} combo={c} />
+            ))}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ───── শীতের পিঠা ───── */}
+      <section className="py-12 md:py-16">
+        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+          <img
+            src={pithaAd}
+            alt="শীতের পিঠার আসল স্বাদ আসুক খেজুর গুড়ের সাথে"
+            loading="lazy"
+            className="w-full rounded-3xl border border-ink/10"
+          />
+          <div>
+            <h2 className="font-display text-3xl md:text-4xl leading-tight">
+              শীতের পিঠার আসল স্বাদ আসে খেজুর গুড় থেকেই
+            </h2>
+            <p className="mt-4 text-ink/75 leading-relaxed">
+              ভাপা, পুলি, চিতই কিংবা পায়েস, গুড় ছাড়া শীতের পিঠা অসম্পূর্ণ। পিঠার জন্য পাতালি বা দানাদার, ওপরে ঢালার জন্য লালী।
+            </p>
+            <ul className="mt-5 space-y-2 text-ink/85">
+              <li>পাতালি গুড়: ভাপা ও পুলি পিঠার পুরে</li>
+              <li>লালী গুড়: চিতই ও রুটির ওপরে ঢেলে</li>
+              <li>দানাদার গুড়: দুধ, দই ও পায়েসে</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ───── রিভিউ ───── */}
+      <Reviews sub="আমাদের ক্রেতাদের পাঠানো সত্যিকারের মেসেজ।" />
+
+      {/* ───── গিভঅ্যাওয়ে ───── */}
+      <section className="px-4 pb-4">
+        <div className="max-w-6xl mx-auto bg-leaf text-white rounded-3xl p-6 md:p-10 grid md:grid-cols-[1fr_auto] gap-6 items-center">
+          <div className="flex gap-4">
+            <Gift className="w-10 h-10 shrink-0 text-brand" aria-hidden="true" />
+            <div>
+              <h2 className="font-display text-2xl md:text-3xl leading-tight">
+                কম্বো কিনুন, FoodAppi-র সাথে রাজশাহী ঘুরতে যান
+              </h2>
+              <p className="mt-2 text-white/85">
+                লটারিতে {bn(4)}টি পরিবার জিতবে রাজশাহী সিটি ট্যুর, কালাভুনা ও আম বাগানের সুযোগ।
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/acher"
+            className="bg-brand text-ink font-bold px-6 py-3.5 rounded-full text-center"
+          >
+            গিভঅ্যাওয়ের বিস্তারিত
+          </Link>
+        </div>
+      </section>
+
+      <Faq />
+
+      {/* মোবাইলে নিচে ভাসমান কল বাটন */}
+      <a
+        href={`tel:${PHONE_TEL}`}
+        aria-label="কল করে অর্ডার করুন"
+        className="md:hidden fixed bottom-4 right-4 z-30 bg-leaf text-white w-14 h-14 rounded-full grid place-items-center shadow-lg"
+      >
+        <Phone className="w-6 h-6" aria-hidden="true" />
+      </a>
     </>
   );
 }
